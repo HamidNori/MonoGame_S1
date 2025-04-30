@@ -1,0 +1,2 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"c:/Github/MonoGame_S1/Content/knight.png","c:/Github/MonoGame_S1/Content/bin/DesktopGL/knight.xnb","TextureProcessor","Texture2DContent",6065,262229,0,1944148
