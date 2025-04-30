@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Numerics;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame_S1
@@ -13,13 +10,12 @@ namespace MonoGame_S1
         public Rectangle Rect {
 
             get {
-                return new Rectangle((int)position.X, (int)position.Y, 100, 200);
+                return new Rectangle((int)position.X, (int)position.Y, 100, 100);
             }
         } 
         public ScaledSprite(Texture2D texture, Vector2 position) : base(texture, position)
         {
-            this.texture = texture;
-            this.position = position;
+            
         }
         
     }

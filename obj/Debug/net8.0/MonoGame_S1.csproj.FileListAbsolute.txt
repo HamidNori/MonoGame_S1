@@ -31,3 +31,4 @@ C:\Github\MonoGame_S1\obj\Debug\net8.0\MonoGame_S1.pdb
 C:\Github\MonoGame_S1\obj\Debug\net8.0\MonoGame_S1.genruntimeconfig.cache
 C:\Github\MonoGame_S1\obj\Debug\net8.0\ref\MonoGame_S1.dll
 c:\Github\MonoGame_S1\bin\Debug\net8.0\Content\knight.xnb
+C:\Github\MonoGame_S1\bin\Debug\net8.0\Content\slime_purple.xnb
