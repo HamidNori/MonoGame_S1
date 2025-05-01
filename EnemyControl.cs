@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MonoGame_S1
 {
-    public class Enemy
+    public class EnemyControl
     {
         
     }
