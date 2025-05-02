@@ -11,10 +11,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     //Karaktärer
-    PlayerSprite playerSprite;
-    EnemySprite enemySprite;
-
-    PlayerMovement playerMovement;
+    Player player;
 
 
 
@@ -29,6 +26,7 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
         base.Initialize();
+        playerSprites = new()
     }
 
     protected override void LoadContent()
@@ -40,17 +38,14 @@ public class Game1 : Game
         Texture2D playerSpriteTexture = Content.Load<Texture2D>("knight");
         Texture2D enemySpriteTexture = Content.Load<Texture2D>("slime_purple");
 
-        playerSprite = new PlayerSprite(playerSpriteTexture, Vector2.Zero, Color.White);
+        player = new Player(playerSpriteTexture, Vector2.Zero, Color.White);
         enemySprite = new EnemySprite(enemySpriteTexture, Vector2.Zero, Color.White);
+        playerMovement = new PlayerMovement(playerSpriteTexture, Vector2.Zero, Color.White);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        playerSprite.Update(gameTime);
-        enemySprite.Update(gameTime);
-        
-        playerMovement.Update(gameTime);
-
+        player.Update(gameTime);
         base.Update(gameTime);
 
 
