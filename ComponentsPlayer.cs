@@ -5,29 +5,49 @@ using Microsoft.Xna.Framework.Input;
 namespace MonoGame_S1
 {
     
-    interface IBaseComponent {
+    public enum AnimationState 
+    {
+        Idle,
+        Run,
+        Roll,
+        Hit,
+        Death
+    }
+
+
+    interface IBaseComponent 
+    {
         void Update(GameTime gameTime);
+        void Draw(SpriteBatch spriteBatch);
     } 
 
-    public class SpriteComponent : IBaseComponent
+    public class Vec2
+    {
+        public Vector2 position;
+    }
+
+    public class PlayerSpriteComponent : IBaseComponent
     {
 
         //Animation/Sprites
         public Texture2D Texture;
-        public Vector2 Position;
+        public Vec2 Position;
         public Color Color;
 
         private int frameColumn = 0;
         private int frameRow = 0;
         private double timer = 0;
-        private double switchTime = 100;
+        private double switchTime = 200;
         private int frameWidth;
         private int frameHeight;
         
+        //variable för nuvarande animation
+        private AnimationState currentAnimationState = AnimationState.Idle;
+        private Vector2 movement;
 
-        public SpriteComponent(Texture2D Texture, Vector2 Position, Color Color ) {
+        public PlayerSpriteComponent(Texture2D Texture, Vec2 position, Color Color ) {
             this.Texture = Texture;
-            this.Position = Position;
+            this.Position = position;
             this.Color = Color;
 
             frameWidth = Texture.Width / 8; 
@@ -58,14 +78,19 @@ namespace MonoGame_S1
         public Rectangle Rect {
             get 
              {
-                return new Rectangle((int)Position.X, (int)Position.Y, frameWidth, frameHeight);
+                return new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth, frameHeight);
              }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight, frameWidth, frameHeight);
-            spriteBatch.Draw(Texture, Position, sourceRectangle, Color);
+            
+            
+            int scale = 2;
+            Rectangle destinationRectangle = new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
+
+            spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color);
         }
 
     }
@@ -84,23 +109,27 @@ namespace MonoGame_S1
         {
             
             KeyboardState kState = Keyboard.GetState();
-
+            Vector2 movement = new Vector2(0,0);
             if(kState.IsKeyDown(Keys.D))
             {
-                player.Position.X += 1;
+                movement.X = Speed;
             }
             if(kState.IsKeyDown(Keys.A))
             {
-                player.Position.X -= 1;
+                movement.X = -Speed;
             }
             if(kState.IsKeyDown(Keys.W))
             {
-                player.Position.Y += 1;
+                movement.Y = -Speed;
             }
             if(kState.IsKeyDown(Keys.S))
             {
-                player.Position.Y -= 1;
+                movement.Y = Speed;
             }
+
+            player.Position += movement;
        }
+
+       public void Draw(SpriteBatch spriteBatch) {}
     }
 }

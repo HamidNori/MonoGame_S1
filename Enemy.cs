@@ -1,18 +1,17 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+
 namespace MonoGame_S1
 {
-    public class Player
+    public class Enemy
     {
         private List<IBaseComponent> Components = new List<IBaseComponent>();
         private Vec2 position = new Vec2();
-        public Player(Texture2D texture, Vector2 position, Color color) {
-            this.position.position = position;
-            Components.Add(new PlayerSpriteComponent(texture, this.position, color));
-            Components.Add(new MovementComponent(this));
+        public Enemy(Texture2D texture, Vector2 position, Color color) {
+        this.position.position = position;
+        Components.Add(new EnemySpriteComponent(texture, this.position, color));
         }
 
         public Vector2 Position 
@@ -37,4 +36,3 @@ namespace MonoGame_S1
 
         }
     }
-

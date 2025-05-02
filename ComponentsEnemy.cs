@@ -1,17 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_S1
 {
-    public class EnemySprite
+
+
+
+    public class EnemySpriteComponent : IBaseComponent
     {
-         //Animation
+
+        //Animation/Sprites
         public Texture2D Texture;
-        public Vector2 Position;
+        public Vec2 Position;
         public Color Color;
 
         private int frameColumn = 0;
@@ -20,23 +21,22 @@ namespace MonoGame_S1
         private double switchTime = 200;
         private int frameWidth;
         private int frameHeight;
-
-        //Egenskaper och rörelse
         
-        public EnemySprite(Texture2D Texture, Vector2 Position, Color Color ) {
+
+        public EnemySpriteComponent(Texture2D Texture, Vec2 position, Color Color ) {
             this.Texture = Texture;
-            this.Position = Position;
+            this.Position = position;
             this.Color = Color;
-            
 
             frameWidth = Texture.Width / 4; 
-            frameHeight = Texture.Height / 3; 
+            frameHeight = Texture.Height / 3 ; 
         }
 
-        public virtual void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             UpdateAnimation(gameTime);
         }
+
 
         private void UpdateAnimation(GameTime gameTime)
         {
@@ -56,16 +56,38 @@ namespace MonoGame_S1
         public Rectangle Rect {
             get 
              {
-                return new Rectangle((int)Position.X, (int)Position.Y, frameWidth, frameHeight);
+                return new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth, frameHeight);
              }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight, frameWidth, frameHeight);
-            spriteBatch.Draw(Texture, Position, sourceRectangle, Color);
+            
+            
+            int scale = 2;
+            Rectangle destinationRectangle = new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
+
+            spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color);
         }
 
+    
+
+    class MovementComponent : IBaseComponent
+    {
+
         
+        Enemy enemy;
+
+        public MovementComponent(Enemy enemy) {
+            this.enemy = enemy;
+        }
+
+        public void Update(GameTime gameTime)
+        {}
+        
+
+        public void Draw(SpriteBatch spriteBatch) {}
+    }
     }
 }

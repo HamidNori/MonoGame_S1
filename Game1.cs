@@ -12,6 +12,7 @@ public class Game1 : Game
 
     //Karaktärer
     Player player;
+    Enemy enemy;
 
 
 
@@ -26,7 +27,6 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
         base.Initialize();
-        playerSprites = new()
     }
 
     protected override void LoadContent()
@@ -39,16 +39,15 @@ public class Game1 : Game
         Texture2D enemySpriteTexture = Content.Load<Texture2D>("slime_purple");
 
         player = new Player(playerSpriteTexture, Vector2.Zero, Color.White);
-        enemySprite = new EnemySprite(enemySpriteTexture, Vector2.Zero, Color.White);
-        playerMovement = new PlayerMovement(playerSpriteTexture, Vector2.Zero, Color.White);
+        enemy = new Enemy(enemySpriteTexture, Vector2.Zero, Color.White);
+
     }
 
     protected override void Update(GameTime gameTime)
     {
         player.Update(gameTime);
+        enemy.Update(gameTime);
         base.Update(gameTime);
-
-
 
         // TODO: Add your update logic here
     }
@@ -59,8 +58,8 @@ public class Game1 : Game
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp); //Start Sprite
-        playerSprite.Draw(_spriteBatch);
-        enemySprite.Draw(_spriteBatch);
+        player.Draw(_spriteBatch);
+        enemy.Draw(_spriteBatch);
         _spriteBatch.End();
 
 
