@@ -14,7 +14,6 @@ namespace MonoGame_S1
         Death
     }
 
-
     interface IBaseComponent 
     {
         void Update(GameTime gameTime);
@@ -40,6 +39,8 @@ namespace MonoGame_S1
         private double switchTime = 200;
         private int frameWidth;
         private int frameHeight;
+        private SpriteEffects spriteEffect = SpriteEffects.None;
+
         
         //variable för nuvarande animation
         private AnimationState currentAnimationState = AnimationState.Idle;
@@ -57,6 +58,7 @@ namespace MonoGame_S1
         public void Update(GameTime gameTime)
         {
             UpdateAnimation(gameTime);
+            UpdateMovement();
         }
 
 
@@ -72,6 +74,67 @@ namespace MonoGame_S1
                 timer = 0;
                 
             }
+
+
+            //Hämta animation fårn bilden
+            switch (currentAnimationState)
+            {
+                case AnimationState.Idle:
+                    frameRow = 0; // Idle animation row
+                    break;
+                case AnimationState.Run:
+                    frameRow = 2; // Run animation row
+                    break;
+                case AnimationState.Roll:
+                    frameRow = 5; // Roll animation row
+                    break;
+                case AnimationState.Hit:
+                    frameRow = 6; // Hit animation row
+                    break;
+                case AnimationState.Death:
+                    frameRow = 7; // Death animation row
+                    break;
+                default:
+                    frameRow = 0; // Default to idle if no state matches
+                    break;
+            }
+        }
+
+        private void UpdateMovement()
+        {
+            //Uppdatera spelarens rörelse och animationstillstånd
+            KeyboardState kState = Keyboard.GetState();
+            movement = new Vector2(0, 0);
+
+            if (kState.IsKeyDown(Keys.D))
+            {
+                movement.X = 1;
+                currentAnimationState = AnimationState.Run; 
+                spriteEffect = SpriteEffects.None; 
+            }
+            else if (kState.IsKeyDown(Keys.A))
+            {
+                movement.X = -1;
+                currentAnimationState = AnimationState.Run; 
+                spriteEffect = SpriteEffects.FlipHorizontally; // Spegelvänd bilden
+
+            }
+            else if (kState.IsKeyDown(Keys.W))
+            {
+                movement.Y = -1;
+                currentAnimationState = AnimationState.Run; 
+            }
+            else if (kState.IsKeyDown(Keys.S))
+            {
+                movement.Y = 1;
+                currentAnimationState = AnimationState.Run; 
+            }
+            else
+            {
+                currentAnimationState = AnimationState.Idle; 
+            }
+
+            Position.position += movement;
         }
 
 
@@ -98,7 +161,7 @@ namespace MonoGame_S1
     class MovementComponent : IBaseComponent
     {
 
-        int Speed = 5;
+        int Speed = 3;
         Player player;
 
         public MovementComponent(Player player) {
@@ -130,6 +193,6 @@ namespace MonoGame_S1
             player.Position += movement;
        }
 
-       public void Draw(SpriteBatch spriteBatch) {}
+       public void Draw(SpriteBatch spriteBatch) { }
     }
 }
