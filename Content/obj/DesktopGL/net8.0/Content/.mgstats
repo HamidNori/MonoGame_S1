@@ -1,1 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Github/MonoGame_S1/Content/knight.png","C:/Github/MonoGame_S1/Content/bin/DesktopGL/Content/knight.xnb","TextureProcessor","Texture2DContent",6065,262229,0,1843714
+"C:/Github/MonoGame_S1/Content/slime_purple.png","C:/Github/MonoGame_S1/Content/bin/DesktopGL/Content/slime_purple.xnb","TextureProcessor","Texture2DContent",1030,27733,0,0064698
