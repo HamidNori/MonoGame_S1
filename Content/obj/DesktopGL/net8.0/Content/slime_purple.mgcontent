@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Github/MonoGame_S1/Content/slime_purple.png</SourceFile>
-  <SourceTime>2025-04-30T10:22:15.4942512+02:00</SourceTime>
-  <DestFile>C:/Github/MonoGame_S1/Content/bin/DesktopGL/Content/slime_purple.xnb</DestFile>
-  <DestTime>2025-05-07T10:19:46.7659801+02:00</DestTime>
+  <SourceFile>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/slime_purple.png</SourceFile>
+  <SourceTime>2025-05-01T20:43:52.3061009+02:00</SourceTime>
+  <DestFile>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Content/slime_purple.xnb</DestFile>
+  <DestTime>2025-05-09T11:38:47.2429683+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2025-04-05T12:10:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
