@@ -16,6 +16,7 @@ public class Game1 : Game
     Player player;
     Enemy enemy;
     TileMaps tilemap;
+    private FollowCamera camera;
 
 
 
@@ -26,6 +27,7 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        camera = new(Vector2.Zero);
 
         tilemap = new TileMaps();
 
@@ -78,6 +80,7 @@ public class Game1 : Game
         player.Update(gameTime);
         enemy.Update(gameTime);
         base.Update(gameTime);
+        camera.Follow(player.destinationRectangle, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
 
         // TODO: Add your update logic here
     }
@@ -87,7 +90,7 @@ public class Game1 : Game
 
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        _spriteBatch.Begin(samplerState: SamplerState.PointClamp); //Start Sprite
+        _spriteBatch.Begin(transformMatrix: camera.Transform, samplerState: SamplerState.PointClamp); //Start Sprite
         
         //Rita spelare och annat
         player.Draw(_spriteBatch);

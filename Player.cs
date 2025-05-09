@@ -9,8 +9,13 @@ namespace MonoGame_S1
     {
         private List<IBaseComponent> Components = new List<IBaseComponent>();
         private Vec2 position = new Vec2();
+        private PlayerSpriteComponent spriteComponent;
+        public Rectangle destinationRectangle => spriteComponent.DestinationRectangle;
+
+        
         public Player(Texture2D texture, Vector2 position, Color color) {
             this.position.position = position;
+            spriteComponent = new PlayerSpriteComponent(texture, this.position, color);
             Components.Add(new PlayerSpriteComponent(texture, this.position, color));
             Components.Add(new MovementComponent(this));
         }
@@ -21,6 +26,7 @@ namespace MonoGame_S1
         }
         public void Update(GameTime gameTime)
         {
+            spriteComponent.Update(gameTime);
             foreach(IBaseComponent component in Components)
             {
                 component.Update(gameTime);
@@ -30,6 +36,8 @@ namespace MonoGame_S1
         public void Draw(SpriteBatch spriteBatch)
         {
             Components[0].Draw(spriteBatch);
+            spriteComponent.Draw(spriteBatch);
+
         }
 
 

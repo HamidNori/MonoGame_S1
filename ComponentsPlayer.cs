@@ -33,6 +33,7 @@ namespace MonoGame_S1
         public Texture2D Texture;
         public Vec2 Position;
         public Color Color;
+        
 
         
 
@@ -141,12 +142,16 @@ namespace MonoGame_S1
         }
 
 
-        public Rectangle Rect {
-            get 
-             {
-                return new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth, frameHeight);
-             }
+        public Rectangle DestinationRectangle
+        {
+            get
+            {
+                int scale = 4;
+                return new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
+            }
         }
+
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -156,15 +161,34 @@ namespace MonoGame_S1
             int scale = 4;
             Rectangle destinationRectangle = new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
 
-            spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color);
+            spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color, 0f, Vector2.Zero, spriteEffect, 0f);        }
+
+    }
+
+    public class FollowCamera
+    {
+        public Vector2 position;
+
+        public FollowCamera(Vector2 position)
+        {
+            this.position = position;
         }
 
+        public void Follow(Rectangle target, Vector2 screenSize)
+        {
+            position = new Vector2 (
+                -target.X + (screenSize.X / 2 - target.Width / 2),
+                -target.Y + (screenSize.Y / 2 - target.Height / 2)
+            );
+        }
+
+        public Matrix Transform => Matrix.CreateTranslation(new Vector3(position, 0));
     }
 
     class MovementComponent : IBaseComponent
     {
 
-        int Speed = 3;
+        int Speed = 5;
         Player player;
         public Vector2 camera;
 
