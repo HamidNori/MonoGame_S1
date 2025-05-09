@@ -13,6 +13,8 @@ public class Game1 : Game
     //Karaktärer
     Player player;
     Enemy enemy;
+    TileMaps tilemap;
+
 
 
 
@@ -21,6 +23,14 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        tilemap = LoadMap(/);
+        tilemap.tileMapTexture = new() 
+        {
+            new Rectangle(0, 0, 16, 16), // Grass
+            new Rectangle(16, 0, 16, 16), // Dirt
+            new Rectangle(32, 0, 16, 16), // Water
+            new Rectangle(48, 0, 16, 16) // Rock
+        }
     }
 
     protected override void Initialize()
@@ -37,6 +47,7 @@ public class Game1 : Game
 
         Texture2D playerSpriteTexture = Content.Load<Texture2D>("knight");
         Texture2D enemySpriteTexture = Content.Load<Texture2D>("slime_purple");
+        Texture2D tileMapTexture = Content.Load<Texture2D>("tilemap");
 
         player = new Player(playerSpriteTexture, Vector2.Zero, Color.White);
         enemy = new Enemy(enemySpriteTexture, Vector2.Zero, Color.White);
