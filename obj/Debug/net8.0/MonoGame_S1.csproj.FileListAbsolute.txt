@@ -100,3 +100,4 @@ C:\Users\Admin\Documents\Monogame\Github\MonoGame_S1\obj\Debug\net8.0\refint\Mon
 C:\Users\Admin\Documents\Monogame\Github\MonoGame_S1\obj\Debug\net8.0\MonoGame_S1.pdb
 C:\Users\Admin\Documents\Monogame\Github\MonoGame_S1\obj\Debug\net8.0\MonoGame_S1.genruntimeconfig.cache
 C:\Users\Admin\Documents\Monogame\Github\MonoGame_S1\obj\Debug\net8.0\ref\MonoGame_S1.dll
+C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\world_tileset.xnb

@@ -1,0 +1,27 @@
+{
+    "activeFile": "TileMapsFiles/TileMap.tsx",
+    "expandedProjectPaths": [
+        "obj/Debug",
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "TileMapsFiles/Platforms.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TileMapsFiles/TileMap.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "openFiles": [
+        "TileMapsFiles/TileMap.tsx",
+        "TileMapsFiles/Platforms.tsx"
+    ],
+    "project": "",
+    "recentFiles": [
+        "TileMapsFiles/Platforms.tsx",
+        "TileMapsFiles/TileMap.tsx"
+    ]
+}

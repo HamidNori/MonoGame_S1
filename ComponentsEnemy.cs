@@ -65,7 +65,7 @@ namespace MonoGame_S1
             Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight, frameWidth, frameHeight);
             
             
-            int scale = 2;
+            int scale = 4;
             Rectangle destinationRectangle = new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
 
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color);

@@ -23,6 +23,7 @@ namespace MonoGame_S1
     public class Vec2
     {
         public Vector2 position;
+
     }
 
     public class PlayerSpriteComponent : IBaseComponent
@@ -32,6 +33,8 @@ namespace MonoGame_S1
         public Texture2D Texture;
         public Vec2 Position;
         public Color Color;
+
+        
 
         private int frameColumn = 0;
         private int frameRow = 0;
@@ -150,7 +153,7 @@ namespace MonoGame_S1
             Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight, frameWidth, frameHeight);
             
             
-            int scale = 2;
+            int scale = 4;
             Rectangle destinationRectangle = new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
 
             spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color);
@@ -163,6 +166,7 @@ namespace MonoGame_S1
 
         int Speed = 3;
         Player player;
+        public Vector2 camera;
 
         public MovementComponent(Player player) {
             this.player = player;
@@ -176,18 +180,26 @@ namespace MonoGame_S1
             if(kState.IsKeyDown(Keys.D))
             {
                 movement.X = Speed;
+                camera.X -= Speed;                
+
             }
             if(kState.IsKeyDown(Keys.A))
             {
                 movement.X = -Speed;
+                camera.X += Speed;                
+
             }
             if(kState.IsKeyDown(Keys.W))
             {
                 movement.Y = -Speed;
+                camera.Y -= Speed;                
+
             }
             if(kState.IsKeyDown(Keys.S))
             {
                 movement.Y = Speed;
+                camera.Y += Speed;                
+
             }
 
             player.Position += movement;

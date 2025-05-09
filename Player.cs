@@ -14,13 +14,11 @@ namespace MonoGame_S1
             Components.Add(new PlayerSpriteComponent(texture, this.position, color));
             Components.Add(new MovementComponent(this));
         }
-
         public Vector2 Position 
         {
             get {return position.position; }
             set {position.position = value; }
         }
-
         public void Update(GameTime gameTime)
         {
             foreach(IBaseComponent component in Components)
