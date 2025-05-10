@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 
 namespace MonoGame_S1
 {
+
+    /// <summary>
+    /// TileMap komponeneter och annat
+    /// </summary>
     public class TileMaps
     {
         public Dictionary<Vector2, int> tileMap;
@@ -17,10 +22,18 @@ namespace MonoGame_S1
         public Texture2D tileMapTextureAltes;
         public Dictionary<Vector2, int> mg;
         public Dictionary<Vector2, int> fg;        
-        public Dictionary<Vector2, int> collision;
+        public Dictionary<Vector2, int> collisions;
+
+        public int tileSize = 64;
+        public int tilesPerRow = 16;
+        public int pixelTileSize = 16;
+
+        public List<Rectangle> Intersections; 
 
 
-
+        /// <summary>
+        /// Laddar upp jälva kartan med hjälp av filePath
+        /// </summary>
         public Dictionary<Vector2, int> LoadMap (string filepath) 
         {
             Dictionary<Vector2, int> result  = new();
@@ -47,35 +60,126 @@ namespace MonoGame_S1
             return result;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        /// <summary>
+        /// Listar ut kollisionen horizonralt
+        /// </summary>
+        public List<Rectangle> getIntesectingTilesHorizontal (Rectangle target)
+        {
+            List<Rectangle> intersections = new();
+
+            int widthInTiles = (target.Width - (target.Width % tileSize)) / tileSize;
+            int heightInTiles = (target.Height - (target.Height % tileSize)) / tileSize;
+
+            for (int x = 0; x <= widthInTiles; x++)
+            {
+                for (int y = 0; y <= heightInTiles; y++)
+                {
+                    intersections.Add(new Rectangle(
+                        (target.X + x * tileSize) / tileSize,
+                        (target.Y + y * tileSize - 1) / tileSize,
+                        tileSize,
+                        tileSize
+                    ));
+                }
+            }
+            return intersections;
+        }
+        /// <summary>
+        /// Listar ut kollisionen verticalt
+        /// </summary>
+        public List<Rectangle> getIntesectingTilesVertical (Rectangle target)
+        {
+            List<Rectangle> intersections = new();
+
+            int widthInTiles = (target.Width - (target.Width % tileSize)) / tileSize;
+            int heightInTiles = (target.Height - (target.Height % tileSize)) / tileSize;
+
+            for (int x = 0; x <= widthInTiles; x++)
+            {
+                for (int y = 0; y <= heightInTiles; y++)
+                {
+                    intersections.Add(new Rectangle(
+                        (target.X + x * tileSize -1) / tileSize,
+                        (target.Y + y * tileSize) / tileSize,
+                        tileSize,
+                        tileSize
+                    ));
+                }
+            }
+            return intersections;
+        }
+        /// <summary>
+        /// Kollisionen fungerrar
+        /// </summary>
+        public void Update (GameTime gameTime, Player player)
         {
 
-            int display_tilesize = 64;
-            int num_tiles_per_row = 16;
-            int pixel_tilesize = 16;
+            Intersections = getIntesectingTilesHorizontal(player.destinationRectangle);
+
+                foreach (var destinationRectangle in Intersections)
+                {
+                    if (mg.TryGetValue(new Vector2(destinationRectangle.X, destinationRectangle.Y), out int _value))
+                    {
+                        Rectangle collsion = new Rectangle(
+                            destinationRectangle.X * tileSize,
+                            destinationRectangle.Y * tileSize,
+                            tileSize,
+                            tileSize 
+                        );
+
+
+                        if (player.destinationRectangle.X > 0.0f)
+                        {
+                            player.destinationRectangle.X = collsion.Left - player.destinationRectangle.Width;
+                        }
+                        else if (player.destinationRectangle.X <0.0f)
+                        {
+                            player.destinationRectangle.X = collsion.Right;
+                        }
+
+                    }
+                }
+
+        Intersections = getIntesectingTilesVertical(player.destinationRectangle);
+            foreach (var destinationRectangle in Intersections)
+            {
+                if (mg.TryGetValue(new Vector2 (destinationRectangle.X, destinationRectangle.Y), out int _value))
+                {
+                    Console.WriteLine("HMår bar");
+                }
+            }
+
+        }
+
+
+        /// <summary>
+        /// Räknar ut hur många pixlar och annat det är i tiles
+        /// </summary>
+        public void Draw(SpriteBatch spriteBatch)
+        {
 
             foreach (var item in tileMap)
             {
               Rectangle dest = new (
-                (int)item.Key.X * display_tilesize,
-                (int)item.Key.Y * display_tilesize,
-                display_tilesize,
-                display_tilesize
+                (int)item.Key.X * tileSize,
+                (int)item.Key.Y * tileSize,
+                tileSize,
+                tileSize
               );  
 
-              int x = item.Value % num_tiles_per_row;
-              int y = item.Value / num_tiles_per_row;
+              int x = item.Value % tilesPerRow;
+              int y = item.Value / tilesPerRow;
 
 
               Rectangle source = new (
-                x * pixel_tilesize,
-                y * pixel_tilesize,
-                pixel_tilesize,
-                pixel_tilesize
+                x * pixelTileSize,
+                y * pixelTileSize,
+                pixelTileSize,
+                pixelTileSize
               );
-
               spriteBatch.Draw(tileMapTextureAltes, dest, source, Color.White);
             }
+
 
         }
 

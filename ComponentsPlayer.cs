@@ -23,6 +23,7 @@ namespace MonoGame_S1
     public class Vec2
     {
         public Vector2 position;
+        public Vector2 velocity;
 
     }
 
@@ -33,6 +34,7 @@ namespace MonoGame_S1
         public Texture2D Texture;
         public Vec2 Position;
         public Color Color;
+
         
 
         
@@ -50,9 +52,9 @@ namespace MonoGame_S1
         private AnimationState currentAnimationState = AnimationState.Idle;
         private Vector2 movement;
 
-        public PlayerSpriteComponent(Texture2D Texture, Vec2 position, Color Color ) {
+        public PlayerSpriteComponent(Texture2D Texture, Vec2 Position, Color Color ) {
             this.Texture = Texture;
-            this.Position = position;
+            this.Position = Position;
             this.Color = Color;
 
             frameWidth = Texture.Width / 8; 
@@ -112,25 +114,21 @@ namespace MonoGame_S1
 
             if (kState.IsKeyDown(Keys.D))
             {
-                movement.X = 1;
                 currentAnimationState = AnimationState.Run; 
                 spriteEffect = SpriteEffects.None; 
             }
             else if (kState.IsKeyDown(Keys.A))
             {
-                movement.X = -1;
                 currentAnimationState = AnimationState.Run; 
                 spriteEffect = SpriteEffects.FlipHorizontally; // Spegelvänd bilden
 
             }
             else if (kState.IsKeyDown(Keys.W))
             {
-                movement.Y = -1;
                 currentAnimationState = AnimationState.Run; 
             }
             else if (kState.IsKeyDown(Keys.S))
             {
-                movement.Y = 1;
                 currentAnimationState = AnimationState.Run; 
             }
             else
@@ -140,8 +138,6 @@ namespace MonoGame_S1
 
             Position.position += movement;
         }
-
-
         public Rectangle DestinationRectangle
         {
             get
@@ -150,18 +146,12 @@ namespace MonoGame_S1
                 return new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
             }
         }
-
-
-
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight, frameWidth, frameHeight);
             
             
-            int scale = 4;
-            Rectangle destinationRectangle = new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
-
-            spriteBatch.Draw(Texture, destinationRectangle, sourceRectangle, Color, 0f, Vector2.Zero, spriteEffect, 0f);        }
+            spriteBatch.Draw(Texture, DestinationRectangle, sourceRectangle, Color, 0f, Vector2.Zero, spriteEffect, 0f);        }
 
     }
 

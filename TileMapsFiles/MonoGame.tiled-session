@@ -1,0 +1,26 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+    },
+    "last.exportedFilePath": "C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/TileMapsFiles/CSV_files",
+    "last.imagePath": "C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/brackeys_platformer_assets/brackeys_platformer_assets/sprites",
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+    ],
+    "project": "MonoGame.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

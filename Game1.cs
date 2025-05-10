@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Diagnostics;
 
 
 namespace MonoGame_S1;
@@ -11,12 +13,13 @@ public class Game1 : Game
     //Anmäla saker
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private FollowCamera camera;
 
     //Karaktärer
     Player player;
     Enemy enemy;
     TileMaps tilemap;
-    private FollowCamera camera;
+
 
 
 
@@ -25,6 +28,10 @@ public class Game1 : Game
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.IsFullScreen = false;
+
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         camera = new(Vector2.Zero);
@@ -33,7 +40,7 @@ public class Game1 : Game
 
         tilemap.mg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_mg.csv");
         tilemap.fg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_fg.csv");
-        tilemap.collision = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_collisions.csv");
+        tilemap.collisions = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_collisions.csv");
 
         tilemap.tileMap = tilemap.mg;
     }
@@ -79,8 +86,17 @@ public class Game1 : Game
 
         player.Update(gameTime);
         enemy.Update(gameTime);
-        base.Update(gameTime);
         camera.Follow(player.destinationRectangle, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
+        Vector2 velocity = new Vector2(0, 0); 
+        tilemap.Update(gameTime, player);
+        
+        
+        //Tile Collision
+        
+
+
+        
+        base.Update(gameTime);
 
         // TODO: Add your update logic here
     }
