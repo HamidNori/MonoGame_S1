@@ -111,44 +111,61 @@ namespace MonoGame_S1
         /// <summary>
         /// Kollisionen fungerrar
         /// </summary>
-        public void Update (GameTime gameTime, Player player)
+        public void Update (Player player)
         {
-
+            Vector2 velocity = new Vector2(0,0);
             Intersections = getIntesectingTilesHorizontal(player.destinationRectangle);
-
-                foreach (var destinationRectangle in Intersections)
+                
+                foreach (var rect in Intersections)
                 {
-                    if (mg.TryGetValue(new Vector2(destinationRectangle.X, destinationRectangle.Y), out int _value))
+                    if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _val))
                     {
                         Rectangle collsion = new Rectangle(
-                            destinationRectangle.X * tileSize,
-                            destinationRectangle.Y * tileSize,
+                            rect.X * tileSize,
+                            rect.Y * tileSize,
                             tileSize,
                             tileSize 
                         );
 
 
-                        if (player.destinationRectangle.X > 0.0f)
+                        if (velocity.X > 0.0f)
                         {
-                            player.destinationRectangle.X = collsion.Left - player.destinationRectangle.Width;
+                            velocity.X = collsion.Left - player.destinationRectangle.Width;
                         }
-                        else if (player.destinationRectangle.X <0.0f)
+                        else if (velocity.X <0.0f)
                         {
-                            player.destinationRectangle.X = collsion.Right;
+                            velocity.X = collsion.Right;
                         }
 
                     }
                 }
 
+
         Intersections = getIntesectingTilesVertical(player.destinationRectangle);
-            foreach (var destinationRectangle in Intersections)
+            foreach (var rect in Intersections)
             {
-                if (mg.TryGetValue(new Vector2 (destinationRectangle.X, destinationRectangle.Y), out int _value))
+                if (mg.TryGetValue(new Vector2 (rect.X, rect.Y), out int _val))
                 {
-                    Console.WriteLine("HMår bar");
+                    Rectangle collsion = new Rectangle(
+                            rect.X * tileSize,
+                            rect.Y * tileSize,
+                            tileSize,
+                            tileSize 
+                        );
+
+
+                        if (velocity.Y > 0.0f)
+                        {
+                            velocity.Y = collsion.Top - player.destinationRectangle.Height;
+                        }
+                        else if (velocity.Y <0.0f)
+                        {
+                            velocity.Y = collsion.Bottom;
+                        }
                 }
             }
-
+        
+        player.Position += velocity;
         }
 
 

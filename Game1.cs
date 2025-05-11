@@ -38,6 +38,8 @@ public class Game1 : Game
 
         tilemap = new TileMaps();
 
+        tilemap.Intersections = new();
+
         tilemap.mg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_mg.csv");
         tilemap.fg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_fg.csv");
         tilemap.collisions = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_collisions.csv");
@@ -87,8 +89,7 @@ public class Game1 : Game
         player.Update(gameTime);
         enemy.Update(gameTime);
         camera.Follow(player.destinationRectangle, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
-        Vector2 velocity = new Vector2(0, 0); 
-        tilemap.Update(gameTime, player);
+        tilemap.Update(player);
         
         
         //Tile Collision
