@@ -179,6 +179,7 @@ namespace MonoGame_S1
     {
 
         int Speed = 5;
+        int jumpPower = 10;
         Player player;
         public Vector2 camera;
 
@@ -190,7 +191,10 @@ namespace MonoGame_S1
         {
             
             KeyboardState kState = Keyboard.GetState();
-            Vector2 movement = new Vector2(0,0);
+            Vector2 movement = player.velocity;
+
+            movement.X  = 0;
+
             if(kState.IsKeyDown(Keys.D))
             {
                 movement.X = Speed;
@@ -205,17 +209,15 @@ namespace MonoGame_S1
             }
             if(kState.IsKeyDown(Keys.W))
             {
-                movement.Y = -Speed;
-                camera.Y -= Speed;                
+                movement.Y = -jumpPower;              
 
             }
-            if(kState.IsKeyDown(Keys.S))
+            if (kState.IsKeyDown(Keys.S))
             {
-                movement.Y = Speed;
-                camera.Y += Speed;                
-
+                movement.Y = Speed;                
             }
-
+            // movement.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            player.velocity = movement;
             player.Position += movement;
        }
 

@@ -9,6 +9,7 @@ namespace MonoGame_S1
     {
         private List<IBaseComponent> Components = new List<IBaseComponent>();
         public Vec2 position = new Vec2();
+        public Vector2 velocity = new Vector2(0,0);
         private PlayerSpriteComponent spriteComponent;
         public Rectangle destinationRectangle => spriteComponent.DestinationRectangle;
 

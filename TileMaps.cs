@@ -113,7 +113,7 @@ namespace MonoGame_S1
         /// </summary>
         public void Update (Player player)
         {
-            Vector2 velocity = new Vector2(0,0);
+            Vector2 velocity = player.velocity;
             Intersections = getIntesectingTilesHorizontal(player.destinationRectangle);
                 
                 foreach (var rect in Intersections)
@@ -130,18 +130,17 @@ namespace MonoGame_S1
 
                         if (velocity.X > 0.0f)
                         {
-                            velocity.X = collsion.Left - player.destinationRectangle.Width;
+                            player.position.position.X = collsion.Left - player.destinationRectangle.Width;
                         }
                         else if (velocity.X <0.0f)
                         {
-                            velocity.X = collsion.Right;
+                            player.position.position.X = collsion.Right;
                         }
-
                     }
                 }
 
 
-        Intersections = getIntesectingTilesVertical(player.destinationRectangle);
+            Intersections = getIntesectingTilesVertical(player.destinationRectangle);
             foreach (var rect in Intersections)
             {
                 if (mg.TryGetValue(new Vector2 (rect.X, rect.Y), out int _val))
@@ -156,11 +155,11 @@ namespace MonoGame_S1
 
                         if (velocity.Y > 0.0f)
                         {
-                            velocity.Y = collsion.Top - player.destinationRectangle.Height;
+                            player.position.position.Y = collsion.Top - player.destinationRectangle.Height;
                         }
                         else if (velocity.Y <0.0f)
                         {
-                            velocity.Y = collsion.Bottom;
+                            player.position.position.Y = collsion.Bottom;
                         }
                 }
             }
