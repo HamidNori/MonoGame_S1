@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
 
 
 namespace MonoGame_S1
@@ -111,60 +106,72 @@ namespace MonoGame_S1
         /// <summary>
         /// Kollisionen fungerrar
         /// </summary>
-        public void Update (Player player)
+        public void Update(Player player)
         {
-            Vector2 velocity = player.velocity;
-            Intersections = getIntesectingTilesHorizontal(player.destinationRectangle);
-                
-                foreach (var rect in Intersections)
-                {
-                    if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _val))
-                    {
-                        Rectangle collsion = new Rectangle(
-                            rect.X * tileSize,
-                            rect.Y * tileSize,
-                            tileSize,
-                            tileSize 
-                        );
+            MovementComponent movement = player.GetComponent<MovementComponent>();
+            bool wasGrounded = false;
 
+            // Applicera velocity till position först
+            Vector2 newPosition = player.Position + player.velocity;
+            player.Position = newPosition;
 
-                        if (velocity.X > 0.0f)
-                        {
-                            player.position.position.X = collsion.Left - player.destinationRectangle.Width;
-                        }
-                        else if (velocity.X <0.0f)
-                        {
-                            player.position.position.X = collsion.Right;
-                        }
-                    }
-                }
-
-
+            // Hantera vertikal kollision först
             Intersections = getIntesectingTilesVertical(player.destinationRectangle);
             foreach (var rect in Intersections)
             {
-                if (mg.TryGetValue(new Vector2 (rect.X, rect.Y), out int _val))
+                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _))
                 {
-                    Rectangle collsion = new Rectangle(
-                            rect.X * tileSize,
-                            rect.Y * tileSize,
-                            tileSize,
-                            tileSize 
-                        );
+                    Rectangle collision = new Rectangle(
+                        rect.X * tileSize,
+                        rect.Y * tileSize,
+                        tileSize,
+                        tileSize 
+                    );
 
-
-                        if (velocity.Y > 0.0f)
-                        {
-                            player.position.position.Y = collsion.Top - player.destinationRectangle.Height;
-                        }
-                        else if (velocity.Y <0.0f)
-                        {
-                            player.position.position.Y = collsion.Bottom;
-                        }
+                    if (player.velocity.Y > 0.0f) // Faller
+                    {
+                        player.Position = new Vector2(player.Position.X, collision.Top - player.destinationRectangle.Height);
+                        player.velocity.Y = 0;
+                        wasGrounded = true;
+                    }
+                    else if (player.velocity.Y < 0.0f) // Hoppar
+                    {
+                        player.Position = new Vector2(player.Position.X, collision.Bottom);
+                        player.velocity.Y = 0;
+                    }
                 }
             }
-        
-        player.Position += velocity;
+
+            // Hantera horisontell kollision
+            Intersections = getIntesectingTilesHorizontal(player.destinationRectangle);
+            foreach (var rect in Intersections)
+            {
+                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _))
+                {
+                    Rectangle collision = new Rectangle(
+                        rect.X * tileSize,
+                        rect.Y * tileSize,
+                        tileSize,
+                        tileSize
+                    );
+
+                    if (player.velocity.X > 0) // Höger kollision
+                    {
+                        player.Position = new Vector2(collision.Left - player.destinationRectangle.Width, player.Position.Y);
+                        player.velocity.X = 0;
+                    }
+                    else if (player.velocity.X < 0.0f) // Vänster kollision
+                    {
+                        player.Position = new Vector2(collision.Right, player.Position.Y);
+                        player.velocity.X = 0;
+                    }
+                }
+            }
+
+            if (movement != null)
+            {
+                movement.SetGrounded(wasGrounded);
+            }
         }
 
 

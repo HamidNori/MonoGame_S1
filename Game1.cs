@@ -64,6 +64,7 @@ public class Game1 : Game
         Texture2D playerSpriteTexture = Content.Load<Texture2D>("knight");
         Texture2D enemySpriteTexture = Content.Load<Texture2D>("slime_purple");
 
+        Vector2 playerStartPosition = new Vector2(100, 300);
         player = new Player(playerSpriteTexture, Vector2.Zero, Color.White);
         enemy = new Enemy(enemySpriteTexture, Vector2.Zero, Color.White);
 
@@ -108,25 +109,24 @@ public class Game1 : Game
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin(transformMatrix: camera.Transform, samplerState: SamplerState.PointClamp); //Start Sprite
-        
+
         //Rita spelare och annat
-        player.Draw(_spriteBatch);
-        enemy.Draw(_spriteBatch);
+
 
 
         //Rita Tiles
-        tilemap.Draw(_spriteBatch);
         tilemap.tileMap = tilemap.mg;
         tilemap.Draw(_spriteBatch);
+        
+        
+        player.Draw(_spriteBatch);
+        enemy.Draw(_spriteBatch);
+
         tilemap.tileMap = tilemap.fg;
         tilemap.Draw(_spriteBatch);
 
 
         _spriteBatch.End();
-
-
-        // TODO: Add your drawing code here
-
         base.Draw(gameTime);
     }
 }

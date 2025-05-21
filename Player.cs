@@ -34,6 +34,18 @@ namespace MonoGame_S1
             }
         }
 
+        public T GetComponent<T>() where T : IBaseComponent
+        {
+            foreach (IBaseComponent component in Components)
+            {
+                if (component is T)
+                {
+                    return (T)component;
+                }
+            }
+            return default(T);
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             Components[0].Draw(spriteBatch);

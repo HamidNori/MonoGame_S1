@@ -14,7 +14,7 @@ namespace MonoGame_S1
         Death
     }
 
-    interface IBaseComponent 
+    public interface IBaseComponent 
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
@@ -44,7 +44,7 @@ namespace MonoGame_S1
         private double timer = 0;
         private double switchTime = 200;
         private int frameWidth;
-        private int frameHeight;
+        private int frameHeight ;
         private SpriteEffects spriteEffect = SpriteEffects.None;
 
         
@@ -57,7 +57,7 @@ namespace MonoGame_S1
             this.Position = Position;
             this.Color = Color;
 
-            frameWidth = Texture.Width / 8; 
+            frameWidth = Texture.Width / 8 ; 
             frameHeight = Texture.Height / 8; 
         }
 
@@ -148,7 +148,7 @@ namespace MonoGame_S1
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight, frameWidth, frameHeight);
+            Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight -4, frameWidth, frameHeight);
             
             
             spriteBatch.Draw(Texture, DestinationRectangle, sourceRectangle, Color, 0f, Vector2.Zero, spriteEffect, 0f);        }
@@ -177,49 +177,59 @@ namespace MonoGame_S1
 
     class MovementComponent : IBaseComponent
     {
-
-        int Speed = 5;
-        int jumpPower = 10;
+        int gravity = 9;        // Ökad gravitation
+        int movementSpeed = 5;   // Samma rörelsehastighet
+        int jumpPower = -20;      // Starkare hopp
+        private bool isGrounded = false;
         Player player;
         public Vector2 camera;
 
-        public MovementComponent(Player player) {
+        public MovementComponent(Player player) 
+        {
             this.player = player;
         }
 
         public void Update(GameTime gameTime)
         {
-            
             KeyboardState kState = Keyboard.GetState();
-            Vector2 movement = player.velocity;
+            Vector2 movement = new Vector2(0, player.velocity.Y); // Behåll bara Y-velocity
 
-            movement.X  = 0;
-
+            // Horisontell rörelse
             if(kState.IsKeyDown(Keys.D))
             {
-                movement.X = Speed;
-                camera.X -= Speed;                
-
+                movement.X = movementSpeed; // Justera hastighet med tid
             }
-            if(kState.IsKeyDown(Keys.A))
+            else if(kState.IsKeyDown(Keys.A))
             {
-                movement.X = -Speed;
-                camera.X += Speed;                
-
+                movement.X = -movementSpeed;
             }
-            if(kState.IsKeyDown(Keys.W))
+
+            // Hopp
+            if (kState.IsKeyDown(Keys.W)) // Ändrat till Space för tydligare hopp
             {
-                movement.Y = -jumpPower;              
-
+                movement.Y = jumpPower;
+                isGrounded = true;
             }
-            if (kState.IsKeyDown(Keys.S))
+
+            // Applicera gravitation om inte på marken
+            if (!isGrounded)
             {
-                movement.Y = Speed;                
+                movement.Y += gravity;
             }
-            movement.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            player.Position += movement;
-       }
 
-       public void Draw(SpriteBatch spriteBatch) { }
+            // Uppdatera spelarens velocity
+            player.velocity = movement;
+        }
+
+        public void SetGrounded(bool grounded)
+        {
+            isGrounded = grounded;
+            if (isGrounded)
+            {
+                player.velocity.Y = 0; // Nollställ Y-velocity när vi landar
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch) { }
     }
 }
