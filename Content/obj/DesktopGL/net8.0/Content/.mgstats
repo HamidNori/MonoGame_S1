@@ -1,1 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/knight.png","C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Content/knight.xnb","TextureProcessor","Texture2DContent",6065,262229,0,2919304
+"C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/slime_purple.png","C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Content/slime_purple.xnb","TextureProcessor","Texture2DContent",1030,27733,0,0191293
+"C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/world_tileset.png","C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Content/world_tileset.xnb","TextureProcessor","Texture2DContent",15603,262229,0,0594366

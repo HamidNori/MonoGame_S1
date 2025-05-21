@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>c:/Github/MonoGame_S1/Content/world_tileset.png</SourceFile>
-  <SourceTime>2025-05-14T12:31:56.8946804+02:00</SourceTime>
-  <DestFile>c:/Github/MonoGame_S1/Content/bin/DesktopGL/Content/world_tileset.xnb</DestFile>
-  <DestTime>2025-05-14T13:06:43.7788347+02:00</DestTime>
+  <SourceFile>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/world_tileset.png</SourceFile>
+  <SourceTime>2025-05-09T12:01:00.2297378+02:00</SourceTime>
+  <DestFile>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Content/world_tileset.xnb</DestFile>
+  <DestTime>2025-05-21T19:37:14.2298392+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2025-04-05T12:10:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -216,8 +216,7 @@ namespace MonoGame_S1
             {
                 movement.Y = Speed;                
             }
-            // movement.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            player.velocity = movement;
+            movement.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             player.Position += movement;
        }
 
