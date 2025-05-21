@@ -75,10 +75,10 @@ public class Game1 : Game
         tilemap.tileMapTextureAltes = tileMapTextureAltes;
         tilemap.tileMapTextureStore = new List<Rectangle>
         {
-            new Rectangle(0, 0, 16, 16),
-            new Rectangle(16, 0, 16, 16),
-            new Rectangle(32, 0, 16, 16),
-            new Rectangle(48, 0, 16, 16)
+            new Rectangle(0, 0, 16, 16),    // Första tile (överst till vänster)
+            new Rectangle(16, 0, 16, 16),   // Andra tile
+            new Rectangle(32, 0, 16, 16),   // Tredje tile
+            new Rectangle(48, 0, 16, 16)    // Fjärde tile
         };
 
     }

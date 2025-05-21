@@ -7,6 +7,10 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "world_tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
     },
     "last.exportedFilePath": "C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/TileMapsFiles/CSV_files",
     "last.imagePath": "C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/brackeys_platformer_assets/brackeys_platformer_assets/sprites",
@@ -17,6 +21,7 @@
     ],
     "project": "MonoGame.tiled-project",
     "recentFiles": [
+        "world_tileset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
