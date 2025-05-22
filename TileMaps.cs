@@ -128,13 +128,13 @@ namespace MonoGame_S1
                         tileSize 
                     );
 
-                    if (player.velocity.Y > 0.0f) // Faller
+                    if (player.velocity.Y > 0.0f) 
                     {
                         player.Position = new Vector2(player.Position.X, collision.Top - player.destinationRectangle.Height);
                         player.velocity.Y = 0;
                         wasGrounded = true;
                     }
-                    else if (player.velocity.Y < 0.0f) // Hoppar
+                    else if (player.velocity.Y < 0.0f)
                     {
                         player.Position = new Vector2(player.Position.X, collision.Bottom);
                         player.velocity.Y = 0;
@@ -155,9 +155,9 @@ namespace MonoGame_S1
                         tileSize
                     );
 
-                    if (player.velocity.X > 0) // Höger kollision
+                    if (player.velocity.X > 0.0f) // Höger kollision
                     {
-                        player.Position = new Vector2(collision.Left - player.destinationRectangle.Width, player.Position.Y);
+                        player.Position = new Vector2(collision.Left - player.destinationRectangle.Width, player.Position.X);
                         player.velocity.X = 0;
                     }
                     else if (player.velocity.X < 0.0f) // Vänster kollision

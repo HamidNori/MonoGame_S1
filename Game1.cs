@@ -65,7 +65,7 @@ public class Game1 : Game
         Texture2D enemySpriteTexture = Content.Load<Texture2D>("slime_purple");
 
         Vector2 playerStartPosition = new Vector2(100, 300);
-        player = new Player(playerSpriteTexture, Vector2.Zero, Color.White);
+        player = new Player(playerSpriteTexture, playerStartPosition, Color.White);
         enemy = new Enemy(enemySpriteTexture, Vector2.Zero, Color.White);
 
 
