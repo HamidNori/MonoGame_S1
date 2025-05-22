@@ -14,7 +14,7 @@ namespace MonoGame_S1
         Death
     }
 
-    public interface IBaseComponent 
+    public interface IBaseComponent
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
@@ -177,12 +177,11 @@ namespace MonoGame_S1
 
     class MovementComponent : IBaseComponent
     {
-        int gravity = 9;        // Ökad gravitation
+        int gravity = 1;        // Ökad gravitation
         int movementSpeed = 5;   // Samma rörelsehastighet
-        int jumpPower = -20;      // Starkare hopp
-        private bool isGrounded = false;
+        int jumpPower = -10;      // Starkare hopp
+        public bool Grounded { get; set; }
         Player player;
-        public Vector2 camera;
 
         public MovementComponent(Player player) 
         {
@@ -191,42 +190,44 @@ namespace MonoGame_S1
 
         public void Update(GameTime gameTime)
         {
+            Grounded = false; 
             KeyboardState kState = Keyboard.GetState();
-            Vector2 movement = new Vector2(0, player.velocity.Y); // Behåll bara Y-velocity
+            KeyboardState oldKState = Keyboard.GetState();
+            Vector2 movement = new Vector2(0, player.velocity.Y);
 
             // Horisontell rörelse
-            if(kState.IsKeyDown(Keys.D))
+            if (kState.IsKeyDown(Keys.D))
             {
-                movement.X = movementSpeed; // Justera hastighet med tid
+                movement.X = movementSpeed;
             }
-            else if(kState.IsKeyDown(Keys.A))
+            else if (kState.IsKeyDown(Keys.A))
             {
                 movement.X = -movementSpeed;
             }
 
             // Hopp
-            if (kState.IsKeyDown(Keys.W)) // Ändrat till Space för tydligare hopp
+            if (kState.IsKeyDown(Keys.W) && oldKState.IsKeyDown(Keys.W))
             {
                 movement.Y = jumpPower;
-                isGrounded = true;
+                Grounded = false; // Spelaren är inte längre på marken
             }
 
             // Applicera gravitation om inte på marken
-            if (!isGrounded)
+            if (!Grounded)
             {
                 movement.Y += gravity;
             }
 
-            // Uppdatera spelarens velocity
             player.velocity = movement;
+            movement.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void SetGrounded(bool grounded)
         {
-            isGrounded = grounded;
-            if (isGrounded)
+            Grounded = grounded;
+            if (Grounded)
             {
-                player.velocity.Y = 0; // Nollställ Y-velocity när vi landar
+                player.velocity.Y = 0;
             }
         }
 
