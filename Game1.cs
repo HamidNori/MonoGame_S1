@@ -21,16 +21,12 @@ public class Game1 : Game
     TileMaps tilemap;
 
 
-
-
-
-
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        // _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        // _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-        // _graphics.IsFullScreen = false;
+        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.IsFullScreen = false;
 
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -42,9 +38,14 @@ public class Game1 : Game
 
         tilemap.mg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_mg.csv");
         tilemap.fg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_fg.csv");
-        tilemap.collisions = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_collisions.csv");
+        tilemap.bg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level2_bg.csv");
+
 
         tilemap.tileMap = tilemap.mg;
+        tilemap.tileMap = tilemap.fg;
+        tilemap.tileMap = tilemap.bg;
+
+
     }
 
     protected override void Initialize()
@@ -66,7 +67,8 @@ public class Game1 : Game
 
         Vector2 playerStartPosition = new Vector2(100, 300);
         player = new Player(playerSpriteTexture, playerStartPosition, Color.White);
-        enemy = new Enemy(enemySpriteTexture, Vector2.Zero, Color.White);
+        Vector2 enemyStartPosition = new Vector2(200, 300);
+        enemy = new Enemy(enemySpriteTexture, enemyStartPosition, Color.White);
 
 
         //Tile Maps och annat
@@ -110,20 +112,25 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin(transformMatrix: camera.Transform, samplerState: SamplerState.PointClamp); //Start Sprite
 
-        //Rita spelare och annat
-
-
-
         //Rita Tiles
+        tilemap.tileMap = tilemap.bg;
+        tilemap.Draw(_spriteBatch);
+
         tilemap.tileMap = tilemap.mg;
         tilemap.Draw(_spriteBatch);
-        
-        
-        player.Draw(_spriteBatch);
-        enemy.Draw(_spriteBatch);
 
         tilemap.tileMap = tilemap.fg;
         tilemap.Draw(_spriteBatch);
+
+        //Rita spelare och annat
+        player.Draw(_spriteBatch);
+        enemy.Draw(_spriteBatch);
+
+        
+        
+        
+
+   
 
 
         _spriteBatch.End();

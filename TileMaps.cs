@@ -17,7 +17,7 @@ namespace MonoGame_S1
         public Texture2D tileMapTextureAltes;
         public Dictionary<Vector2, int> mg;
         public Dictionary<Vector2, int> fg;        
-        public Dictionary<Vector2, int> collisions;
+        public Dictionary<Vector2, int> bg;
 
         public int tileSize = 64;
         public int tilesPerRow = 16;
@@ -71,7 +71,7 @@ namespace MonoGame_S1
                 {
                     intersections.Add(new Rectangle(
                         (target.X + x * tileSize) / tileSize,
-                        (target.Y + y * tileSize - 1) / tileSize,
+                        (target.Y + y * tileSize) / tileSize,
                         tileSize,
                         tileSize
                     ));
@@ -94,7 +94,7 @@ namespace MonoGame_S1
                 for (int y = 0; y <= heightInTiles; y++)
                 {
                     intersections.Add(new Rectangle(
-                        (target.X + x * tileSize -1) / tileSize,
+                        (target.X + x * tileSize) / tileSize,
                         (target.Y + y * tileSize) / tileSize,
                         tileSize,
                         tileSize
@@ -106,73 +106,77 @@ namespace MonoGame_S1
         /// <summary>
         /// Kollisionen fungerrar
         /// </summary>
+        private bool CheckCollision(Rectangle playerRect, Rectangle tileRect)
+        {
+            return playerRect.Intersects(tileRect);
+        }
+
         public void Update(Player player)
         {
             MovementComponent movement = player.GetComponent<MovementComponent>();
             bool wasGrounded = false;
-
-            // Applicera velocity till position först
-            Vector2 newPosition = player.Position + player.velocity;
-            player.Position = newPosition;
-
-            // Hantera vertikal kollision först
-            Intersections = getIntesectingTilesVertical(player.destinationRectangle);
-            foreach (var rect in Intersections)
+            
+            // Applicera horisontell rörelse först
+            player.Position = new Vector2(player.Position.X + player.velocity.X, player.Position.Y);
+            
+            // Kontrollera horisontell kollision
+            foreach (var tile in mg)
             {
-                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _val))
-                {
-                    Rectangle collision = new Rectangle(
-                        rect.X * tileSize,
-                        rect.Y * tileSize,
-                        tileSize,
-                        tileSize 
-                    );
+                Rectangle tileRect = new Rectangle(
+                    (int)tile.Key.X * tileSize,
+                    (int)tile.Key.Y * tileSize,
+                    tileSize,
+                    tileSize
+                );
 
-                    if (player.velocity.Y > 0.0f) 
+                if (CheckCollision(player.destinationRectangle, tileRect))
+                {
+                    if (player.velocity.X > 0) // Höger kollision
                     {
-                        player.Position = new Vector2(player.Position.X, collision.Top - player.destinationRectangle.Height);
-                        player.velocity.Y = 0;
-                        wasGrounded = true;
+                        player.Position = new Vector2(tileRect.Left - player.destinationRectangle.Width, player.Position.Y);
                     }
-                    else if (player.velocity.Y < 0.0f)
+                    else if (player.velocity.X < 0) // Vänster kollision
                     {
-                        player.Position = new Vector2(player.Position.X, collision.Bottom);
-                        player.velocity.Y = 0;
+                        player.Position = new Vector2(tileRect.Right, player.Position.Y);
                     }
+                    player.velocity.X = 0;
+                    break;
                 }
             }
 
-            // Hantera horisontell kollision
-            Intersections = getIntesectingTilesHorizontal(player.destinationRectangle);
-            foreach (var rect in Intersections)
+            // Applicera vertikal rörelse
+            player.Position = new Vector2(player.Position.X, player.Position.Y + player.velocity.Y);
+            
+            // Kontrollera vertikal kollision
+            foreach (var tile in mg)
             {
-                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _val))
-                {
-                    Rectangle collision = new Rectangle(
-                        rect.X * tileSize,
-                        rect.Y * tileSize,
-                        tileSize,
-                        tileSize
-                    );
+                Rectangle tileRect = new Rectangle(
+                    (int)tile.Key.X * tileSize,
+                    (int)tile.Key.Y * tileSize,
+                    tileSize,
+                    tileSize
+                );
 
-                    if (player.velocity.X > 0.0f) // Höger kollision
+                if (CheckCollision(player.destinationRectangle, tileRect))
+                {
+                    if (player.velocity.Y > 0) // Kollision nedåt
                     {
-                        System.Diagnostics.Debug.WriteLine($"Ingen tile hittad på position ({rect.X},{rect.Y})");
-                        player.Position = new Vector2(collision.Left - player.destinationRectangle.Width, player.Position.Y);
-                        player.velocity.X = 0;
+                        player.Position = new Vector2(player.Position.X, tileRect.Top - player.destinationRectangle.Height);
+                        wasGrounded = true;
+                        
                     }
-                    else if (player.velocity.X < 0.0f) // Vänster kollision
+                    else if (player.velocity.Y < 0) // Kollision uppåt
                     {
-                        System.Diagnostics.Debug.WriteLine($"Ingen tile hittad på position ({rect.X},{rect.Y})");
-                        player.Position = new Vector2(collision.Right, player.Position.Y);
-                        player.velocity.Y = 0;
+                        player.Position = new Vector2(player.Position.X, tileRect.Bottom);
                     }
+                    player.velocity.Y = 0;
+                    break;
                 }
             }
 
             if (movement != null)
             {
-                movement.SetGrounded(wasGrounded);
+               movement.SetGrounded(wasGrounded);
             }
         }
 
@@ -207,8 +211,6 @@ namespace MonoGame_S1
 
 
         }
-
-
 
     }
 }

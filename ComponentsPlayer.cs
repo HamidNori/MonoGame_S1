@@ -37,8 +37,7 @@ namespace MonoGame_S1
 
         
 
-        
-
+    
         private int frameColumn = 0;
         private int frameRow = 0;
         private double timer = 0;
@@ -57,7 +56,7 @@ namespace MonoGame_S1
             this.Position = Position;
             this.Color = Color;
 
-            frameWidth = Texture.Width / 8 ; 
+            frameWidth = Texture.Width / 8; 
             frameHeight = Texture.Height / 8; 
         }
 
@@ -143,15 +142,30 @@ namespace MonoGame_S1
             get
             {
                 int scale = 4;
-                return new Rectangle((int)Position.position.X, (int)Position.position.Y, frameWidth * scale, frameHeight * scale);
+                return new Rectangle(
+                    (int)Position.position.X,
+                    (int)Position.position.Y,
+                    frameWidth * scale,
+                    frameHeight * scale);
             }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle sourceRectangle = new Rectangle(frameColumn * frameWidth, frameRow * frameHeight -4, frameWidth, frameHeight);
+            Rectangle sourceRectangle = new Rectangle(
+                frameColumn * frameWidth,
+                frameRow * frameHeight,
+                frameWidth,
+                frameHeight);
             
             
-            spriteBatch.Draw(Texture, DestinationRectangle, sourceRectangle, Color, 0f, Vector2.Zero, spriteEffect, 0f);        }
+            spriteBatch.Draw(
+                Texture,
+                DestinationRectangle,
+                sourceRectangle,
+                Color,
+                0f,
+                Vector2.Zero,
+                spriteEffect, 0f);        }
 
     }
 
@@ -179,47 +193,98 @@ namespace MonoGame_S1
     {
         int gravity = 1;        // Ökad gravitation
         int movementSpeed = 5;   // Samma rörelsehastighet
-        int jumpPower = -10;      // Starkare hopp
+        int jumpPower = -20;      // Starkare hopp
         public bool Grounded { get; set; }
         Player player;
 
-        public MovementComponent(Player player) 
+        public KeyboardState kState;
+        public KeyboardState oldKState;
+
+        //Dashing
+        public bool isDashing = false;
+        public int dashSpeed = 20;
+        public float dashDuration = 0.2f;
+        public float dashTimer = 0.2f;
+        public float dashCoolDown = 0.2f;
+        public float dashCoolDownTimer = 0.3f;
+        public int facingDirection = 1; // 1 = höger, -1 = vänster
+
+        private KeyboardState previousKState;
+
+        public MovementComponent(Player player)
         {
             this.player = player;
+            previousKState = Keyboard.GetState();
         }
 
         public void Update(GameTime gameTime)
         {
-            Grounded = false; 
+            //Fysiken
+
+            //Statements
             KeyboardState kState = Keyboard.GetState();
-            KeyboardState oldKState = Keyboard.GetState();
             Vector2 movement = new Vector2(0, player.velocity.Y);
 
-            // Horisontell rörelse
+            // Normal rörelse
             if (kState.IsKeyDown(Keys.D))
             {
+                facingDirection = 1;
                 movement.X = movementSpeed;
             }
             else if (kState.IsKeyDown(Keys.A))
             {
+                facingDirection = -1;
                 movement.X = -movementSpeed;
             }
 
-            // Hopp
-            if (kState.IsKeyDown(Keys.W) && oldKState.IsKeyDown(Keys.W))
+            // Dash kontroll
+            if (kState.IsKeyDown(Keys.W) && 
+                previousKState.IsKeyUp(Keys.W) && 
+                dashCoolDownTimer <= 0 && 
+                !isDashing)
             {
-                movement.Y = jumpPower;
-                Grounded = false; // Spelaren är inte längre på marken
+                isDashing = true;
+                dashTimer = dashDuration;
+                dashCoolDownTimer = dashCoolDown;
             }
 
-            // Applicera gravitation om inte på marken
+            // Dash hantering
+            if (isDashing)
+            {
+                movement.X = dashSpeed * facingDirection;
+                movement.Y = 0;
+                dashTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (dashTimer <= 0)
+                {
+                    isDashing = false;
+                }
+            }
+
+            // Hopp kontroll - ändrad för att använda previousKState
+            if (kState.IsKeyDown(Keys.Space)
+                && Grounded
+                && !isDashing)
+            {
+                movement.Y = jumpPower;
+                Grounded = false;
+            }
+
+            // Gravitation
             if (!Grounded)
             {
                 movement.Y += gravity;
             }
 
+            // Dash cooldown
+            if (dashCoolDownTimer > 0)
+            {
+                dashCoolDownTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            // Uppdatera previous state
+            previousKState = kState;
+            
             player.velocity = movement;
-            movement.Y += 9.82f * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void SetGrounded(bool grounded)
