@@ -119,7 +119,7 @@ namespace MonoGame_S1
             Intersections = getIntesectingTilesVertical(player.destinationRectangle);
             foreach (var rect in Intersections)
             {
-                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _))
+                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _val))
                 {
                     Rectangle collision = new Rectangle(
                         rect.X * tileSize,
@@ -146,7 +146,7 @@ namespace MonoGame_S1
             Intersections = getIntesectingTilesHorizontal(player.destinationRectangle);
             foreach (var rect in Intersections)
             {
-                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _))
+                if (mg.TryGetValue(new Vector2(rect.X, rect.Y), out int _val))
                 {
                     Rectangle collision = new Rectangle(
                         rect.X * tileSize,
@@ -157,13 +157,15 @@ namespace MonoGame_S1
 
                     if (player.velocity.X > 0.0f) // Höger kollision
                     {
-                        player.Position = new Vector2(collision.Left - player.destinationRectangle.Width, player.Position.X);
+                        System.Diagnostics.Debug.WriteLine($"Ingen tile hittad på position ({rect.X},{rect.Y})");
+                        player.Position = new Vector2(collision.Left - player.destinationRectangle.Width, player.Position.Y);
                         player.velocity.X = 0;
                     }
                     else if (player.velocity.X < 0.0f) // Vänster kollision
                     {
+                        System.Diagnostics.Debug.WriteLine($"Ingen tile hittad på position ({rect.X},{rect.Y})");
                         player.Position = new Vector2(collision.Right, player.Position.Y);
-                        player.velocity.X = 0;
+                        player.velocity.Y = 0;
                     }
                 }
             }
