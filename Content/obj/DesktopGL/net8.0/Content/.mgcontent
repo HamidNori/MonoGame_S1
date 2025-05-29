@@ -4,9 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Github/MonoGame_S1/Content/knight.png</File>
-    <File>C:/Github/MonoGame_S1/Content/slime_purple.png</File>
-    <File>C:/Github/MonoGame_S1/Content/world_tileset.png</File>
+    <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/knight.png</File>
+    <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/slime_purple.png</File>
+    <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/world_tileset.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

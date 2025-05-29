@@ -137,27 +137,43 @@ namespace MonoGame_S1
 
             Position.position += movement;
         }
+        public Rectangle collisionRectangle
+        {
+            get
+            {
+                int width = frameWidth * 4;  // Smalare kollisionsbox
+                int height = frameHeight * 4;     // Samma höjd som sprites
+                int offsetX = (spriteEffect == SpriteEffects.FlipHorizontally) ? -width / 2 : 0; // Justera X-position för spegelvändning
+
+                return new Rectangle(
+                    (int)Position.position.X + offsetX,
+                    (int)Position.position.Y,
+                    width,
+                    height);
+            }
+        }
         public Rectangle DestinationRectangle
         {
             get
             {
-                int scale = 4;
                 return new Rectangle(
                     (int)Position.position.X,
                     (int)Position.position.Y,
-                    frameWidth * scale,
-                    frameHeight * scale);
+                    frameWidth * 4,   // Skala upp
+                    frameHeight * 4   // Skala upp
+                );
             }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+
             Rectangle sourceRectangle = new Rectangle(
                 frameColumn * frameWidth,
-                frameRow * frameHeight,
+                frameRow * frameHeight - 4,
                 frameWidth,
                 frameHeight);
-            
-            
+
+
             spriteBatch.Draw(
                 Texture,
                 DestinationRectangle,
@@ -165,7 +181,8 @@ namespace MonoGame_S1
                 Color,
                 0f,
                 Vector2.Zero,
-                spriteEffect, 0f);        }
+                spriteEffect, 0f);
+        }
 
     }
 

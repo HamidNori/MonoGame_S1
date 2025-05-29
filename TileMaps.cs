@@ -116,9 +116,10 @@ namespace MonoGame_S1
             MovementComponent movement = player.GetComponent<MovementComponent>();
             bool wasGrounded = false;
             
+
             // Applicera horisontell rörelse först
             player.Position = new Vector2(player.Position.X + player.velocity.X, player.Position.Y);
-            
+
             // Kontrollera horisontell kollision
             foreach (var tile in mg)
             {
@@ -129,11 +130,11 @@ namespace MonoGame_S1
                     tileSize
                 );
 
-                if (CheckCollision(player.destinationRectangle, tileRect))
+                if (CheckCollision(player.collisionRectangle, tileRect))
                 {
                     if (player.velocity.X > 0) // Höger kollision
                     {
-                        player.Position = new Vector2(tileRect.Left - player.destinationRectangle.Width, player.Position.Y);
+                        player.Position = new Vector2(tileRect.Left - player.collisionRectangle.Width, player.Position.Y);
                     }
                     else if (player.velocity.X < 0) // Vänster kollision
                     {
@@ -145,8 +146,12 @@ namespace MonoGame_S1
             }
 
             // Applicera vertikal rörelse
-            player.Position = new Vector2(player.Position.X, player.Position.Y + player.velocity.Y);
-            
+            player.Position = new Vector2
+            (
+                player.Position.X,
+                player.Position.Y + player.velocity.Y
+            );
+
             // Kontrollera vertikal kollision
             foreach (var tile in mg)
             {
@@ -157,13 +162,13 @@ namespace MonoGame_S1
                     tileSize
                 );
 
-                if (CheckCollision(player.destinationRectangle, tileRect))
+                if (CheckCollision(player.collisionRectangle, tileRect))
                 {
                     if (player.velocity.Y > 0) // Kollision nedåt
                     {
-                        player.Position = new Vector2(player.Position.X, tileRect.Top - player.destinationRectangle.Height);
+                        player.Position = new Vector2(player.Position.X, tileRect.Top - player.collisionRectangle.Height);
                         wasGrounded = true;
-                        
+
                     }
                     else if (player.velocity.Y < 0) // Kollision uppåt
                     {
@@ -174,10 +179,13 @@ namespace MonoGame_S1
                 }
             }
 
+            // Om vi inte redan är groundade, kolla om vi står ovanpå en tile
             if (movement != null)
             {
-               movement.SetGrounded(wasGrounded);
+                movement.SetGrounded(wasGrounded);
             }
+
+
         }
 
 
