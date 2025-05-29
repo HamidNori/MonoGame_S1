@@ -17,8 +17,10 @@ public class Game1 : Game
 
     //Karaktärer
     Player player;
-    Enemy enemy;
     TileMaps tilemap;
+    private Texture2D debugPixel;
+
+    MapManager mapManager;
 
 
     public Game1()
@@ -36,14 +38,11 @@ public class Game1 : Game
 
         tilemap.Intersections = new();
 
-        tilemap.mg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_mg.csv");
-        tilemap.fg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level1_fg.csv");
-        tilemap.bg = tilemap.LoadMap("../../../TileMapsFiles/CSV_files/level2_bg.csv");
-
-
         tilemap.tileMap = tilemap.mg;
         tilemap.tileMap = tilemap.fg;
-        tilemap.tileMap = tilemap.bg;
+        tilemap.tileMap = tilemap.win;
+        tilemap.tileMap = tilemap.dead;
+        tilemap.tileMap = tilemap.sign;
 
 
     }
@@ -63,26 +62,31 @@ public class Game1 : Game
 
         //Spelare och annat
         Texture2D playerSpriteTexture = Content.Load<Texture2D>("knight");
-        Texture2D enemySpriteTexture = Content.Load<Texture2D>("slime_purple");
 
         Vector2 playerStartPosition = new Vector2(100, 300);
         player = new Player(playerSpriteTexture, playerStartPosition, Color.White);
         Vector2 enemyStartPosition = new Vector2(200, 300);
-        enemy = new Enemy(enemySpriteTexture, enemyStartPosition, Color.White);
 
 
         //Tile Maps och annat
         Texture2D tileMapTextureAltes = Content.Load<Texture2D>("world_tileset");
 
-        tilemap.tileMapTextureAltes = tileMapTextureAltes;
-        tilemap.tileMapTextureStore = new List<Rectangle>
+        foreach (var level in mapManager.Levels)
         {
-            new Rectangle(0, 0, 16, 16),    // Första tile (överst till vänster)
-            new Rectangle(16, 0, 16, 16),   // Andra tile
-            new Rectangle(32, 0, 16, 16),   // Tredje tile
-            new Rectangle(48, 0, 16, 16)    // Fjärde tile
-        };
+            tilemap.tileMapTextureAltes = tileMapTextureAltes;
+            tilemap.tileMapTextureStore = new List<Rectangle>
+            {
+                new Rectangle(0, 0, 16, 16),    // Första tile (överst till vänster)
+                new Rectangle(16, 0, 16, 16),   // Andra tile
+                new Rectangle(32, 0, 16, 16),   // Tredje tile
+                new Rectangle(48, 0, 16, 16)    // Fjärde tile
+            };
 
+
+        }
+        
+        debugPixel = new Texture2D(GraphicsDevice, 1, 1);
+        debugPixel.SetData(new[] { Color.White });
     }
 
     protected override void Update(GameTime gameTime)
@@ -90,16 +94,22 @@ public class Game1 : Game
 
 
         player.Update(gameTime);
-        enemy.Update(gameTime);
         camera.Follow(player.collisionRectangle, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
         tilemap.Update(player);
+        mapManager.CurrentMap.Update(player);
+
+        if (player.Position.X > _graphics.PreferredBackBufferWidth)
+        {
+            mapManager.NextLevel();
+            player.Position = new Vector2(0, player.Position.Y);
+        }
         
         
         //Tile Collision
-        
 
 
-        
+
+
         base.Update(gameTime);
 
         // TODO: Add your update logic here
@@ -110,30 +120,25 @@ public class Game1 : Game
 
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        _spriteBatch.Begin(transformMatrix: camera.Transform, samplerState: SamplerState.PointClamp); //Start Sprite
+        _spriteBatch.Begin(transformMatrix: camera.Transform, samplerState: SamplerState.PointClamp);
 
-        //Rita Tiles
-        tilemap.tileMap = tilemap.bg;
-        tilemap.Draw(_spriteBatch);
+        var currentMap = mapManager.CurrentMap;
 
-        tilemap.tileMap = tilemap.mg;
-        tilemap.Draw(_spriteBatch);
+        currentMap.tileMap = currentMap.win;
+        currentMap.Draw(_spriteBatch);
+        currentMap.tileMap = currentMap.dead;
+        currentMap.Draw(_spriteBatch);
+        currentMap.tileMap = currentMap.sign;
+        currentMap.Draw(_spriteBatch);
+        currentMap.tileMap = currentMap.mg;
+        currentMap.Draw(_spriteBatch);
+        currentMap.tileMap = currentMap.fg;
+        currentMap.Draw(_spriteBatch);
 
-        tilemap.tileMap = tilemap.fg;
-        tilemap.Draw(_spriteBatch);
-
-        //Rita spelare och annat
         player.Draw(_spriteBatch);
-        enemy.Draw(_spriteBatch);
-
-        
-        
-        
-
-   
-
+        player.spriteComponent.DebugDraw(_spriteBatch, debugPixel);
 
         _spriteBatch.End();
         base.Draw(gameTime);
-    }
+        }
 }

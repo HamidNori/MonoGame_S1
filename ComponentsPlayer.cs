@@ -124,11 +124,7 @@ namespace MonoGame_S1
             }
             else if (kState.IsKeyDown(Keys.W))
             {
-                currentAnimationState = AnimationState.Run; 
-            }
-            else if (kState.IsKeyDown(Keys.S))
-            {
-                currentAnimationState = AnimationState.Run; 
+                currentAnimationState = AnimationState.Roll; 
             }
             else
             {
@@ -141,15 +137,17 @@ namespace MonoGame_S1
         {
             get
             {
-                int width = frameWidth * 4;  // Smalare kollisionsbox
-                int height = frameHeight * 4;     // Samma höjd som sprites
-                int offsetX = (spriteEffect == SpriteEffects.FlipHorizontally) ? -width / 2 : 0; // Justera X-position för spegelvändning
+                int width = frameWidth * 1; // Mindre bredd
+                int height = (int)(frameHeight * 1.3); // Mindre höjd
+                int offsetX = (frameWidth * 4 - width) / 2; // Centrera rutan horisontellt
+                int offsetY = (frameHeight * 4 - height) - 17; // Placera rutan längst ner vid fötterna
 
                 return new Rectangle(
                     (int)Position.position.X + offsetX,
-                    (int)Position.position.Y,
+                    (int)Position.position.Y + offsetY,
                     width,
-                    height);
+                    height
+                );
             }
         }
         public Rectangle DestinationRectangle
@@ -169,7 +167,7 @@ namespace MonoGame_S1
 
             Rectangle sourceRectangle = new Rectangle(
                 frameColumn * frameWidth,
-                frameRow * frameHeight - 4,
+                frameRow * frameHeight,
                 frameWidth,
                 frameHeight);
 
@@ -182,6 +180,16 @@ namespace MonoGame_S1
                 0f,
                 Vector2.Zero,
                 spriteEffect, 0f);
+        }
+
+        public void DebugDraw(SpriteBatch spriteBatch, Texture2D pixel)
+        {
+            Rectangle rect = collisionRectangle;
+            // Rita en röd ram runt collisionRectangle
+            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, rect.Width, 2), Color.Red); // Topp
+            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y + rect.Height - 2, rect.Width, 2), Color.Red); // Botten
+            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, 2, rect.Height), Color.Red); // Vänster
+            spriteBatch.Draw(pixel, new Rectangle(rect.X + rect.Width - 2, rect.Y, 2, rect.Height), Color.Red); // Höger
         }
 
     }
