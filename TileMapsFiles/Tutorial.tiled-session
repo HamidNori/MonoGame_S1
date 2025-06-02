@@ -3,22 +3,47 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "Level2.tmx",
     "expandedProjectPaths": [
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "CSV_files/level1.tmx": {
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 256,
+                "y": 255
+            }
+        },
+        "Level2.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 209,
+                "y": 232
+            }
+        },
+        "world_tileset.tsx": {
+            "scaleInDock": 1
+        }
     },
     "last.exportedFilePath": "C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/TileMapsFiles/CSV_files",
     "last.imagePath": "C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/brackeys_platformer_assets/brackeys_platformer_assets/sprites",
     "map.height": 32,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 32,
     "openFiles": [
+        "CSV_files/level1.tmx",
+        "Level2.tmx"
     ],
     "project": "Tutorial.tiled-project",
     "recentFiles": [
+        "CSV_files/level1.tmx",
+        "Level2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

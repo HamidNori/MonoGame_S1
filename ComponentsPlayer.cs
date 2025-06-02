@@ -203,12 +203,19 @@ namespace MonoGame_S1
             this.position = position;
         }
 
-        public void Follow(Rectangle target, Vector2 screenSize)
+        public void Follow(Rectangle target, Vector2 screenSize, int mapWidth, int mapHeight)
         {
-            position = new Vector2 (
-                -target.X + (screenSize.X / 2 - target.Width / 2),
-                -target.Y + (screenSize.Y / 2 - target.Height / 2)
-            );
+
+            float cameraX = -target.X + (screenSize.X / 2 - target.Width / 2);
+            float cameraY = -target.Y + (screenSize.Y / 2 - target.Height / 2);
+
+            float minX = -(mapWidth - screenSize.X);
+            float minY = -(mapHeight - screenSize.Y);
+
+            cameraX = MathHelper.Clamp(cameraX, minX, 0);
+            cameraY = MathHelper.Clamp(cameraY, minY, 0);
+
+            position = new Vector2(cameraX, cameraY);
         }
 
         public Matrix Transform => Matrix.CreateTranslation(new Vector3(position, 0));
@@ -221,9 +228,6 @@ namespace MonoGame_S1
         int jumpPower = -20;      // Starkare hopp
         public bool Grounded { get; set; }
         Player player;
-
-        public KeyboardState kState;
-        public KeyboardState oldKState;
 
         //Dashing
         public bool isDashing = false;
