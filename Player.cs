@@ -7,15 +7,20 @@ namespace MonoGame_S1
 {
     public class Player
     {
+
+        //Spelarens Grunder
         private List<IBaseComponent> Components = new List<IBaseComponent>();
         public Vec2 position = new Vec2();
         public Vector2 velocity = new Vector2(0,0);
         public PlayerSpriteComponent spriteComponent;
+
+        //Spelarens Död
         public bool hasDied = false;
         public float deathTimer = 0f;
         public float respawnDelay = 1.0f; // sekunder
         public Vector2 spawnPosition = new Vector2(100, 300); // eller där du vill starta
 
+        //Spelarens Kollision
         public Rectangle collisionRectangle => spriteComponent.collisionRectangle;
 
         public Player(Texture2D texture, Vector2 position, Color color) {
@@ -25,13 +30,18 @@ namespace MonoGame_S1
             Components.Add(spriteComponent);
             Components.Add(new MovementComponent(this));
         }
-
-        public Vector2 Position 
+        
+        
+        //Spelarens Position
+        public Vector2 Position
         {
-            get {return position.position; }
-            set {position.position = value; }
+            get { return position.position; }
+            set { position.position = value; }
         }
 
+        
+
+        //Spelarens död
         public void Update(GameTime gameTime)
         {
             if (hasDied)
@@ -41,16 +51,16 @@ namespace MonoGame_S1
                 {
                     Respawn();
                 }
-                return; // Hoppa över övrig uppdatering när död
+                return;
             }
 
             spriteComponent.Update(gameTime);
-            foreach(IBaseComponent component in Components)
+            foreach (IBaseComponent component in Components)
             {
                 component.Update(gameTime);
             }
         }
-
+        //Spelarens respawn
         public void Respawn()
         {
             hasDied = false;

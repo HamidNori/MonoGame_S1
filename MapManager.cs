@@ -42,8 +42,7 @@ namespace MonoGame_S1
             }
             else
             {
-                // Reset to the first level if there are no more levels
-
+                CurrentLevelIndex = 0;
             }
         }
 

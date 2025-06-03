@@ -5,6 +5,7 @@ using System;
 
 
 
+
 namespace MonoGame_S1;
 
 public class Game1 : Game
@@ -26,6 +27,12 @@ public class Game1 : Game
     Texture2D layer3;
     Texture2D layer4;
     private float backgroundTimer = 0f;
+
+    //Collectables 
+    List<Collectable> collectables;
+    Texture2D coinTexture;
+    private SpriteFont scoreFont;
+
 
     public Game1()
     {
@@ -61,13 +68,25 @@ public class Game1 : Game
 
         //Spelare och annat
         Texture2D playerSpriteTexture = Content.Load<Texture2D>("knight");
-
         Vector2 playerStartPosition = new Vector2(100, 300);
         player = new Player(playerSpriteTexture, playerStartPosition, Color.White);
+
+        //Collectables 
+        coinTexture = Content.Load<Texture2D>("coin");
+        scoreFont = Content.Load<SpriteFont>("Fonts/MainFont");
+
+
+        collectables = new List<Collectable>
+        {
+            new Collectable("Coin", 10, new Vector2(200, 300), coinTexture, 6, 0.1f),
+            new Collectable("Coin", 10, new Vector2(400, 300), coinTexture, 6, 0.1f),
+            new Collectable("Coin", 10, new Vector2(600, 300), coinTexture, 6, 0.1f)
+        };
 
 
         //Tile Maps och annat
         Texture2D tileMapTextureAltes = Content.Load<Texture2D>("world_tileset");
+
         //background
         layer1 = Content.Load<Texture2D>("Layer1");
         layer2 = Content.Load<Texture2D>("Layer2");
@@ -81,10 +100,10 @@ public class Game1 : Game
             level.tileMapTextureAltes = tileMapTextureAltes;
             level.tileMapTextureStore = new List<Rectangle>
             {
-                new Rectangle(0, 0, 16, 16),    // Första tile (överst till vänster)
-                new Rectangle(16, 0, 16, 16),   // Andra tile
-                new Rectangle(32, 0, 16, 16),   // Tredje tile
-                new Rectangle(48, 0, 16, 16)    // Fjärde tile
+                new Rectangle(0, 0, 16, 16), 
+                new Rectangle(16, 0, 16, 16),   
+                new Rectangle(32, 0, 16, 16),   
+                new Rectangle(48, 0, 16, 16)   
             };
         }
 
@@ -109,6 +128,26 @@ public class Game1 : Game
             player.Position = new Vector2(0, player.Position.Y);
         }
 
+
+        // Uppdatera collectables
+        foreach (var collectable in collectables)
+        {
+            collectable.Update(gameTime);
+
+            // Kolla om spelaren samlar in collectable
+            if (collectable.BoundingBox.Intersects(player.collisionRectangle) && !collectable.Collected)
+            {
+                int score = collectable.Collect();
+                if (score > 0)
+                {
+                    
+                    Console.WriteLine($"Collected {collectable.Name} for {score} points!");
+                }
+            }
+        }
+
+
+
         base.Update(gameTime);
     }
 
@@ -120,8 +159,8 @@ public class Game1 : Game
         int screenHeight = _graphics.PreferredBackBufferHeight;
 
         // Beräkna offset för lagren
-        float offsetY3 = (float)Math.Sin(backgroundTimer * 0.5f) * 20f; // långsam, 20 pixlar upp/ner
-        float offsetY4 = (float)Math.Sin(backgroundTimer * 0.7f + 1f) * 30f; // annan takt och fas
+        float offsetY3 = (float)Math.Sin(backgroundTimer * 0.5f) * 20f;
+        float offsetY4 = (float)Math.Sin(backgroundTimer * 0.7f + 1f) * 30f;
 
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
@@ -142,6 +181,16 @@ public class Game1 : Game
         currentMap.DrawLayer(_spriteBatch, currentMap.sign);
         currentMap.DrawLayer(_spriteBatch, currentMap.mg);
         currentMap.DrawLayer(_spriteBatch, currentMap.fg);
+
+        foreach (var collectable in collectables)
+        {
+            collectable.Draw(_spriteBatch);
+        }
+
+        foreach (var collectable in collectables)
+        {
+            collectable.DrawScore(_spriteBatch, scoreFont);
+        }
 
         player.Draw(_spriteBatch);
 

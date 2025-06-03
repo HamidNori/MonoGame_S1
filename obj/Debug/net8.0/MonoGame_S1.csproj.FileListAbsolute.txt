@@ -107,3 +107,6 @@ C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\La
 C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\Layer2.xnb
 C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\Layer3.xnb
 C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\Layer4.xnb
+C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\coin.xnb
+C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\spriteFont.xnb
+C:\Users\hamno\OneDrive\Documents\GitHub\MonoGame_S1\bin\Debug\net8.0\Content\Fonts\MainFont.xnb

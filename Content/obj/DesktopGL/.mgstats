@@ -1,2 +1,9 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"c:/Github/MonoGame_S1/Content/knight.png","c:/Github/MonoGame_S1/Content/bin/DesktopGL/knight.xnb","TextureProcessor","Texture2DContent",6065,262229,0,1944148
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/1.png","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Layer1.xnb","TextureProcessor","Texture2DContent",1519,746581,0,2285876
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/2.png","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Layer2.xnb","TextureProcessor","Texture2DContent",2977,746581,0,0220314
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/3.png","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Layer3.xnb","TextureProcessor","Texture2DContent",14227,746581,0,0200436
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/4.png","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Layer4.xnb","TextureProcessor","Texture2DContent",6533,746581,0,035658
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/coin.png","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/coin.xnb","TextureProcessor","Texture2DContent",500,12373,0,0033037
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/Fonts/File.spritefont","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/Fonts/MainFont.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21529,0,118379
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/knight.png","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/knight.xnb","TextureProcessor","Texture2DContent",6065,262229,0,0097662
+"c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/world_tileset.png","c:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/bin/DesktopGL/world_tileset.xnb","TextureProcessor","Texture2DContent",15603,262229,0,012871

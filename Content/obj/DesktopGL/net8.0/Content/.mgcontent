@@ -8,6 +8,8 @@
     <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/2.png</File>
     <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/3.png</File>
     <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/4.png</File>
+    <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/coin.png</File>
+    <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/Fonts/File.spritefont</File>
     <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/knight.png</File>
     <File>C:/Users/hamno/OneDrive/Documents/GitHub/MonoGame_S1/Content/world_tileset.png</File>
   </SourceFiles>
@@ -16,6 +18,8 @@
     <File>Layer2.png</File>
     <File>Layer3.png</File>
     <File>Layer4.png</File>
+    <File xsi:nil="true" />
+    <File>Fonts/MainFont.spritefont</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

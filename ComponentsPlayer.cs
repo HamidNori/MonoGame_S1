@@ -85,22 +85,22 @@ namespace MonoGame_S1
             switch (currentAnimationState)
             {
                 case AnimationState.Idle:
-                    frameRow = 0; // Idle animation row
+                    frameRow = 0; 
                     break;
                 case AnimationState.Run:
-                    frameRow = 2; // Run animation row
+                    frameRow = 2; 
                     break;
                 case AnimationState.Roll:
-                    frameRow = 5; // Roll animation row
+                    frameRow = 5;
                     break;
                 case AnimationState.Hit:
-                    frameRow = 6; // Hit animation row
+                    frameRow = 6; 
                     break;
                 case AnimationState.Death:
-                    frameRow = 7; // Death animation row
+                    frameRow = 7; 
                     break;
                 default:
-                    frameRow = 0; // Default to idle if no state matches
+                    frameRow = 0; 
                     break;
             }
         }
@@ -137,10 +137,10 @@ namespace MonoGame_S1
         {
             get
             {
-                int width = frameWidth * 1; // Mindre bredd
-                int height = (int)(frameHeight * 1.3); // Mindre höjd
-                int offsetX = (frameWidth * 4 - width) / 2; // Centrera rutan horisontellt
-                int offsetY = (frameHeight * 4 - height) - 17; // Placera rutan längst ner vid fötterna
+                int width = frameWidth * 1; 
+                int height = (int)(frameHeight * 1.3); 
+                int offsetX = (frameWidth * 4 - width) / 2;
+                int offsetY = (frameHeight * 4 - height) - 17; 
 
                 return new Rectangle(
                     (int)Position.position.X + offsetX,
@@ -157,8 +157,8 @@ namespace MonoGame_S1
                 return new Rectangle(
                     (int)Position.position.X,
                     (int)Position.position.Y,
-                    frameWidth * 4,   // Skala upp
-                    frameHeight * 4   // Skala upp
+                    frameWidth * 4,   
+                    frameHeight * 4  
                 );
             }
         }
@@ -180,16 +180,6 @@ namespace MonoGame_S1
                 0f,
                 Vector2.Zero,
                 spriteEffect, 0f);
-        }
-
-        public void DebugDraw(SpriteBatch spriteBatch, Texture2D pixel)
-        {
-            Rectangle rect = collisionRectangle;
-            // Rita en röd ram runt collisionRectangle
-            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, rect.Width, 2), Color.Red); // Topp
-            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y + rect.Height - 2, rect.Width, 2), Color.Red); // Botten
-            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, 2, rect.Height), Color.Red); // Vänster
-            spriteBatch.Draw(pixel, new Rectangle(rect.X + rect.Width - 2, rect.Y, 2, rect.Height), Color.Red); // Höger
         }
 
     }
@@ -223,9 +213,9 @@ namespace MonoGame_S1
 
     class MovementComponent : IBaseComponent
     {
-        int gravity = 1;        // Ökad gravitation
-        int movementSpeed = 5;   // Samma rörelsehastighet
-        int jumpPower = -20;      // Starkare hopp
+        int gravity = 1;        
+        int movementSpeed = 5;   
+        int jumpPower = -20;     
         public bool Grounded { get; set; }
         Player player;
 
@@ -236,7 +226,7 @@ namespace MonoGame_S1
         public float dashTimer = 0.2f;
         public float dashCoolDown = 0.2f;
         public float dashCoolDownTimer = 0.3f;
-        public int facingDirection = 1; // 1 = höger, -1 = vänster
+        public int facingDirection = 1;
 
         private KeyboardState previousKState;
 
@@ -289,7 +279,7 @@ namespace MonoGame_S1
                 }
             }
 
-            // Hopp kontroll - ändrad för att använda previousKState
+            // Hopp kontroll
             if (kState.IsKeyDown(Keys.Space)
                 && Grounded
                 && !isDashing)

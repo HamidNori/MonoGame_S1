@@ -171,12 +171,12 @@ namespace MonoGame_S1
 
                 if (CheckCollision(futureRectY, tileRect))
                 {
-                    if (player.velocity.Y > 0) // Kollision nedåt
+                    if (player.velocity.Y > 0) 
                     {
                         newPosY.Y = tileRect.Top - (futureRectY.Height + (futureRectY.Y - (int)newPosY.Y));
                         wasGrounded = true;
                     }
-                    else if (player.velocity.Y < 0) // Kollision uppåt
+                    else if (player.velocity.Y < 0)
                     {
                         newPosY.Y = tileRect.Bottom - (futureRectY.Y - (int)newPosY.Y);
                     }
@@ -206,9 +206,9 @@ namespace MonoGame_S1
                 if (CheckCollision(player.spriteComponent.collisionRectangle, tileRect))
                 {
                     player.hasDied = true;
-                    player.Position = player.spawnPosition; // eller (0,0) om du vill
+                    player.Position = player.spawnPosition; 
                     player.velocity = Vector2.Zero;
-                    break; // Avsluta loopen om spelaren dör
+                    break;
                 }
             }
 
