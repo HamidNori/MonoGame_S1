@@ -1,21 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "qUk41w2oQTY=",
+  "dgSpecHash": "Hpbz8cyhcxY=",
   "success": true,
   "projectFilePath": "C:\\Users\\hamno\\OneDrive\\Documents\\GitHub\\MonoGame_S1\\MonoGame_S1.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\hamno\\.nuget\\packages\\monogame.content.builder.task\\3.8.3\\monogame.content.builder.task.3.8.3.nupkg.sha512",
+    "C:\\Users\\hamno\\.nuget\\packages\\monogame.content.builder.task\\3.8.4\\monogame.content.builder.task.3.8.4.nupkg.sha512",
     "C:\\Users\\hamno\\.nuget\\packages\\monogame.extended\\4.1.0\\monogame.extended.4.1.0.nupkg.sha512",
-    "C:\\Users\\hamno\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.3\\monogame.framework.desktopgl.3.8.3.nupkg.sha512",
+    "C:\\Users\\hamno\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.4\\monogame.framework.desktopgl.3.8.4.nupkg.sha512",
     "C:\\Users\\hamno\\.nuget\\packages\\monogame.library.openal\\1.23.1.10\\monogame.library.openal.1.23.1.10.nupkg.sha512",
     "C:\\Users\\hamno\\.nuget\\packages\\monogame.library.sdl\\2.32.2.1\\monogame.library.sdl.2.32.2.1.nupkg.sha512",
     "C:\\Users\\hamno\\.nuget\\packages\\nvorbis\\0.10.4\\nvorbis.0.10.4.nupkg.sha512",
     "C:\\Users\\hamno\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
-    "C:\\Users\\hamno\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
-    "C:\\Users\\hamno\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.11\\microsoft.aspnetcore.app.ref.8.0.11.nupkg.sha512",
-    "C:\\Users\\hamno\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.11\\microsoft.netcore.app.host.win-x64.8.0.11.nupkg.sha512",
-    "C:\\Users\\hamno\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.11\\microsoft.netcore.app.ref.8.0.11.nupkg.sha512",
-    "C:\\Users\\hamno\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.11\\microsoft.windowsdesktop.app.ref.8.0.11.nupkg.sha512"
+    "C:\\Users\\hamno\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }
